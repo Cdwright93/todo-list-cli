@@ -15,24 +15,26 @@ let statusArray = [""] //our list of completion statuses (true/false)
 while(choice !== 3){
     if(choice === 1){
         console.log("\nCreate a new item\n");
-        //prompt to ask user for new item
         let answer = prompt("Please enter an item: ");
         items.push(answer);
         statusArray.push(false);
-        // console.log(items);
-        // console.log(statusArray);
-
         printList();
         selectChoice();
-    } else if(choice === 2){
-        console.log("\nSelect an item to complete\n");
-        //prompt the user for item number to complete
-        printList();
-        selectChoice();
+    } else if(choice == 2){
+        while(choice == 2){
+        let answer = Number(prompt("\nSelect an item to complete\n"));
+        if(answer > statusArray.length){
+            printList()
+            answer = Number(prompt("\nSelect an item to complete\n"));
+        }
+        if(answer <= statusArray.length){
+            statusArray[answer] = true
+            printList();
+            selectChoice();
+        } 
+    }
     } else {
-        //if they pick anything that isn't 1 or 2
         console.log("\nPlease choose a number between 1 and 3\n");
-
         selectChoice();
     }
 }
@@ -52,53 +54,11 @@ function printList(){
     for(let i = 1; i < items.length; i++){
         //if statement to check if status is true or false
         if(statusArray[i] === false){
-            status = "[incomplete] ";
+            status = "[Incomplete] ";
         } else if(statusArray[i] === true){
-            status = "[complete] ";
+            status = "[Complete] ";
         }
         console.log(i + ". " + status + items[i]);
     }
     console.log("");
 }
-
-
-/*
-
-1. Figure out the UI
--console.logs()
-    -different user options
-    -welcome message
--prompts
-    -check if they input 1 or 2 -if statement
-    1 for adding an item  
-    2 for completing an item
--display the list to user
-
-2. Store to-do list items (choice === 1)
--prompt user for to-do list item
--start an array with an empty string to account for us looping through the array from index 1
--array to store prompt as a to-do list item
--.push() add toDo list item to array
--start to-do list at 1 (instead of index 0)
-//////////
--store those items as incomplete
-
-incomplete = false
-complete = true
-
-let statusArray = [];
-
-
-items: ["", "Wash dog", "Go for walk", "Get groceries", "Mow"]
-status:["", false,       true,          false,          false]
-
-
-
-3. Completing Incomplete items (choice === 2)
--prompt for number that is the same as the number in the to-do list that we are trying to mark as complete
--conditional to check completion status
-
-
-
-
-*/
